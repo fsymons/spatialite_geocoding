@@ -1,11 +1,16 @@
 # spatialite_geocoding
-Get the country etc a specimen falls within from GADM using spatialite on Windows
+Get the country etc a specimen falls within from GADM (http://gadm.org/version2) using spatialite on Windows
 
-Requires:
-=========
+*Requires:*
+
 * Spatialite.exe compiled for Windows
 * Pre-populated spatialite database containing GADM administrative areas (~2 GB)
 * BAT available here
 * CSV files(s) with the appropriate layout (below)
 
-Place all the components above in a folder. Double-click the BAT file. You should find a new CSV with [filename] out.csv for each input file. It will contain all input rows and any matches from GADM. A list of fields is at the top.
+Place all the components above in a folder. Double-click the BAT file. You should find a new CSV with "[filename] out.csv" for each input file. It will contain all input rows and any matches from GADM. A list of fields is at the top.
+
+*Spatialite database*
+This was created using postgres. I chopped each shape into one small enough to fit in spatialite's page size (4kb), and indexed the resulting data. GADM appears to have a unique id for each shape. It then has a system of ids for administrative areas levels 0-5 inclusive, where 0 = country (it also has an iso code for these). The combination of all these ids is unique for an area and is the equivalent of the unique shape id.
+
+The BAT's hard-coded query returns ISO code and then each of the level 1 - 5 codes in separate columns.
